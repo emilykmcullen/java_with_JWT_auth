@@ -23,11 +23,11 @@ public class User implements Serializable {
     private Date lastLoginDateDisplay;
     private Date joinDate;
     private String[] roles; //ROLE_USER, ROLE_ADMIN
-    private String authorities;
+    private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked;
 
-    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String[] roles, String authorities, boolean isActive, boolean isNotLocked) {
+    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String[] roles, String[] authorities, boolean isActive, boolean isNotLocked) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
@@ -143,11 +143,11 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public String getAuthorities() {
+    public String[] getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(String authorities) {
+    public void setAuthorities(String[] authorities) {
         this.authorities = authorities;
     }
 
