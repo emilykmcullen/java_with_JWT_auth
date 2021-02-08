@@ -1,3 +1,7 @@
+jwt:
+  secret: "dhf$@£$(bgalsjkfh___--4890y5tg2£$£7dsKHSSSFfha32q0[APUEFRAEPA/F[]"
+
+
 server:
   port: 8081
 #  error:
