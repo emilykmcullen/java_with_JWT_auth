@@ -29,7 +29,7 @@ public class JWTTokenProvider {
 
     @Value("${jwt.secret}")
     private String secret;
-    
+
     public String generateJwtToken(UserPrincipal userPrincipal){
         String[] claims = getClaimsFromUser(userPrincipal);
         return JWT.create().withIssuer(SecurityConstant.COMPANY_ISSUING_TOKEN).withAudience(SecurityConstant.COMPANY_ADMINISTRATION)
