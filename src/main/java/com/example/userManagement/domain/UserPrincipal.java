@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
+//allows us to return a user as a UserDetails (part of Spring Security)
+
 public class UserPrincipal implements UserDetails {
 
     private User user;
