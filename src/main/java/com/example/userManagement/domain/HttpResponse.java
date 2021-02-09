@@ -1,11 +1,13 @@
 package com.example.userManagement.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
 public class HttpResponse {
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss", locale="en_GB")
     private Date timeStamp;
     private int httpStatusCode;
     private HttpStatus httpStatus;
@@ -20,6 +22,14 @@ public class HttpResponse {
         this.httpStatus = httpStatus;
         this.reason = reason;
         this.message = message;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public int getHttpStatusCode() {
