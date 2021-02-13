@@ -102,12 +102,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if(currentUser == null){
                 throw new UserNotFoundException("No user found by username " + currentUsername);
             }
-            User userByUsername = findUserByUsername(newUsername);
-            if(userByUsername != null && !currentUser.getId().equals(userByUsername.getId())){
+            User userByNewUsername = findUserByUsername(newUsername);
+            if(userByNewUsername != null && !currentUser.getId().equals(userByNewUsername.getId())){
                 throw new UsernameExistException("Username already exists");
             }
-            User userByEmail = findUserByEmail(newEmail);
-            if(userByUsername != null && !currentUser.getId().equals(userByEmail.getId())){
+            User userByNewEmail = findUserByEmail(newEmail);
+            if(userByNewEmail != null && !currentUser.getId().equals(userByNewEmail.getId())){
                 throw new EmailExistException("Email already exists");
             }
             return currentUser;
