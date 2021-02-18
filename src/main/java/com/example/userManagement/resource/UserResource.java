@@ -51,6 +51,8 @@ public class UserResource extends ExceptionHandling {
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
+    
+
     private HttpHeaders getJwtHeader(UserPrincipal user) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER, jwtTokenProvider.generateJwtToken(user));
