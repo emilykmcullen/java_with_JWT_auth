@@ -1,6 +1,7 @@
 package com.example.userManagement.resource;
 
 
+import com.example.userManagement.domain.HttpResponse;
 import com.example.userManagement.domain.User;
 import com.example.userManagement.domain.UserPrincipal;
 import com.example.userManagement.exception.domain.EmailExistException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ import static com.example.userManagement.constant.SecurityConstant.JWT_TOKEN_HEA
 @RequestMapping(path = {"/", "/user"})
 public class UserResource extends ExceptionHandling {
 
+    public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
     private UserService userService;
     private AuthenticationManager authenticationManager;
     private JWTTokenProvider jwtTokenProvider;
@@ -96,6 +99,26 @@ public class UserResource extends ExceptionHandling {
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('user:delete')")
+    public ResponseEntity<HttpResponse> deleteUser(@PathVariable("id") Long id){
+        userService.deleteUser(id);
+        return response(HttpStatus.NO_CONTENT, USER_DELETED_SUCCESSFULLY);
+    }
+
+    @PostMapping("/updateProfileImage")
+    public ResponseEntity<User> updateProfileImage(
+                                       @RequestParam("username") String username,
+                                       @RequestParam(value="profileImage")MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException {
+        User user = userService.updateProfileImage(username, profileImage);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
+        return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase()
+        message.toUpperCase()), httpStatus);
     }
 
     private HttpHeaders getJwtHeader(UserPrincipal user) {
