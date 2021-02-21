@@ -22,10 +22,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
+import static com.example.userManagement.constant.FileConstant.*;
 import static com.example.userManagement.constant.SecurityConstant.JWT_TOKEN_HEADER;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
 @RequestMapping(path = {"/", "/user"})
@@ -116,8 +124,29 @@ public class UserResource extends ExceptionHandling {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/image/{username}/{filename}", produces = IMAGE_JPEG_VALUE)
+    public byte[] getProfileImage(@PathVariable("username") String username, @PathVariable("fileName") String fileName) throws IOException {
+        return Files.readAllBytes(Paths.get(USER_FOLDER + username + FORWARD_SLASH + fileName ));
+    }
+
+    @GetMapping(path = "/image/profile/{username}", produces = IMAGE_JPEG_VALUE)
+    public byte[] getTempProfileImage(@PathVariable("username") String username) throws IOException {
+        URL url = new URL(TEMP_PROFILE_IMAGE_BASE_URL + username);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try(InputStream inputStream = url.openStream()){
+            int bytesRead;
+            //from the inputStream read this many bytes at a time
+            byte[] chunk = new byte[1024];
+            while((bytesRead = inputStream.read(chunk)) > 0){
+                //read 'chunk' starting from 0 upto bytesRead until there are no more bytes to read
+                byteArrayOutputStream.write(chunk, 0, bytesRead);
+            }
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
+
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
-        return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase()
+        return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase(),
         message.toUpperCase()), httpStatus);
     }
 
