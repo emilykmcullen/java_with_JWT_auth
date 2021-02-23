@@ -108,6 +108,7 @@ public class User implements Serializable {
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
+        System.out.println("HELLO");
         this.profileImageUrl = profileImageUrl;
     }
 

@@ -183,6 +183,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     private String getTemporaryProfileImageUrl(String username) {
+        System.out.println("Username:" + ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH + username).toUriString());
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH + username).toUriString();
     }
 
@@ -228,7 +229,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private void saveProfileImage(User user, MultipartFile profileImage) throws IOException {
         if(profileImage !=null){
             Path userFolder = Paths.get(USER_FOLDER + user.getUsername()).toAbsolutePath().normalize();
-            if(Files.exists(userFolder)){
+            if(!Files.exists(userFolder)){
                 Files.createDirectories(userFolder);
                 LOGGER.info(DIRECTORY_CREATED + userFolder);
             }
@@ -242,6 +243,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private String setProfileImageUrl(String username) {
+        System.out.println("TESTING: " + ServletUriComponentsBuilder.fromCurrentContextPath().path(USER_IMAGE_PATH + username + FORWARD_SLASH
+                + username + DOT + JPG_EXTENSION ).toUriString());
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(USER_IMAGE_PATH + username + FORWARD_SLASH
                 + username + DOT + JPG_EXTENSION ).toUriString();
     }
