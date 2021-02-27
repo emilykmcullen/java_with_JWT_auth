@@ -97,6 +97,16 @@ public class UserResource extends ExceptionHandling {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
+    @PostMapping("/resetpassword")
+    public ResponseEntity<User> resetPassword(@RequestParam("username") String username,
+                                              @RequestParam("currentPassword") String currentPassword,
+                                              @RequestParam("newPassword") String newPassword) throws UserNotFoundException{
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, currentPassword));
+        User updatedUser = userService.resetPassword(username, currentPassword, newPassword);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+
     @GetMapping("/find/{username}")
     public ResponseEntity<User> getUser(@PathVariable("username") String username){
         User user = userService.findUserByUsername(username);

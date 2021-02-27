@@ -141,9 +141,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User resetPassword(String username, String currentPassword, String newPassword) throws UserNotFoundException {
+        User user = userRepository.findUserByUsername(username);
+
+        if(user == null){
+            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
+        }
+        else {
+            user.setPassword(encodePassword(newPassword));
+            userRepository.save(user);
+        }
+        return user;
+
+    }
+
+
+    @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);
     }
+
 
     @Override
     public User updateProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException {
@@ -225,6 +242,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
     }
+
 
     private void saveProfileImage(User user, MultipartFile profileImage) throws IOException {
         if(profileImage !=null){
