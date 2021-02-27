@@ -122,14 +122,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername,String newPassword,
+    public User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername,
                            String newEmail, String role, boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException {
         User currentUser = validateNewUsernameAndEmail(currentUsername, newUsername, newEmail);
         currentUser.setFirstName(newFirstName);
         currentUser.setLastName(newLastName);
         currentUser.setUsername(newUsername);
         currentUser.setEmail(newEmail);
-        currentUser.setPassword(encodePassword(newPassword));
         currentUser.setActive(isActive);
         currentUser.setNotLocked(isNotLocked);
         currentUser.setAuthorities(getRoleEnumName(role).getAuthorities());

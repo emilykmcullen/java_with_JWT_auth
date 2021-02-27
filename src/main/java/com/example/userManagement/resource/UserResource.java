@@ -86,18 +86,17 @@ public class UserResource extends ExceptionHandling {
                                            @RequestParam("firstName") String firstName,
                                            @RequestParam("lastName") String lastName,
                                            @RequestParam("username") String username,
-                                           @RequestParam("password") String password,
                                            @RequestParam("email") String email,
                                            @RequestParam("role") String role,
                                            @RequestParam("isActive") String isActive,
                                            @RequestParam("isNotLocked") String isNotLocked,
                                            @RequestParam(value="profileImage", required=false)MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException {
-        User updatedUser = userService.updateUser(currentUsername, firstName, lastName, username, password, email, role,
+        User updatedUser = userService.updateUser(currentUsername, firstName, lastName, username, email, role,
                 Boolean.parseBoolean(isNotLocked), Boolean.parseBoolean(isActive), profileImage);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @PostMapping("/resetpassword")
+    @PostMapping("/resetPassword")
     public ResponseEntity<User> resetPassword(@RequestParam("username") String username,
                                               @RequestParam("currentPassword") String currentPassword,
                                               @RequestParam("newPassword") String newPassword) throws UserNotFoundException{

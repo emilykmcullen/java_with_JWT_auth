@@ -23,7 +23,7 @@ public interface UserService {
     User addNewUser(String firstName, String lastName, String username, String password, String email, String role,
                     boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException;
 
-    User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername, String newPassword, String newEmail, String role,
+    User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername, String newEmail, String role,
                     boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException;
 
     void deleteUser(long id);
