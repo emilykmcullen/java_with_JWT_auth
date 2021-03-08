@@ -22,6 +22,7 @@ public class AuthenticationFailureListener {
     @EventListener
     public void onAuthenticationFailure(AuthenticationFailureBadCredentialsEvent event){
         Object principal = event.getAuthentication().getPrincipal();
+        // principal is the username from the authentication
         if(principal instanceof String){
             String username = (String) event.getAuthentication().getPrincipal();
             loginAttemptService.addUserToLoginAttemptCache(username);
