@@ -122,7 +122,7 @@ public class UserResource extends ExceptionHandling {
     @PreAuthorize("hasAnyAuthority('user:delete')")
     public ResponseEntity<HttpResponse> deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
-        return response(HttpStatus.NO_CONTENT, USER_DELETED_SUCCESSFULLY);
+        return response(HttpStatus.OK, USER_DELETED_SUCCESSFULLY);
     }
 
     @PostMapping("/updateProfileImage")
