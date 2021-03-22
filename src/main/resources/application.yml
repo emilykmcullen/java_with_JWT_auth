@@ -10,9 +10,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/userportal #change this to your database url
-    password: LetMeIn123? #change this to your database username
-    username: root #change this to your database password
+    url: jdbc:mysql://localhost:3306/userportal # database url
+    password: LetMeIn123? #database pass
+    username: root #db username
   jpa:
     show-sql: true
     hibernate:
