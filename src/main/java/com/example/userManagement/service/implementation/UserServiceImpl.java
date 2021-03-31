@@ -157,8 +157,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
-    public void deleteUser(long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(String username) {
+        User user = userRepository.findUserByUsername(username);
+        userRepository.deleteById(user.getId());
     }
 
 

@@ -118,10 +118,10 @@ public class UserResource extends ExceptionHandling {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{username}")
     @PreAuthorize("hasAnyAuthority('user:delete')")
-    public ResponseEntity<HttpResponse> deleteUser(@PathVariable("id") Long id){
-        userService.deleteUser(id);
+    public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username){
+        userService.deleteUser(username);
         return response(HttpStatus.OK, USER_DELETED_SUCCESSFULLY);
     }
 
