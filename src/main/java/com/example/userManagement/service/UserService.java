@@ -2,6 +2,7 @@ package com.example.userManagement.service;
 
 import com.example.userManagement.domain.User;
 import com.example.userManagement.exception.domain.EmailExistException;
+import com.example.userManagement.exception.domain.NotAnImageFileException;
 import com.example.userManagement.exception.domain.UserNotFoundException;
 import com.example.userManagement.exception.domain.UsernameExistException;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,15 +22,15 @@ public interface UserService {
     User findUserByEmail(String email);
 
     User addNewUser(String firstName, String lastName, String username, String password, String email, String role,
-                    boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException;
+                    boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
 
     User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername, String newEmail, String role,
-                    boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException;
+                    boolean isNotLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
 
     void deleteUser(String username) throws IOException;
 
     User resetPassword(String username, String currentPassword, String newPassword) throws UserNotFoundException;
 
 
-    User updateProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException;
+    User updateProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
 }
